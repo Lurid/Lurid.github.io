@@ -1,0 +1,9 @@
+//const lang = new Language(
+{
+	"author": "Lurid",
+	"dictionary": {
+		"hello": "Hello"
+	}
+}
+//);
+//const qweasd = "привит";
