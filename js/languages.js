@@ -27,11 +27,13 @@ class PageSettings {
 		//let langScriptElement = document.head.getElementsByTagName("script")[0];
 		//langScriptElement.src = "lang/" + this.language + ".json";
 
-		const requestURL = "lang/" + this.language + ".json";
+		/*
+		const requestURL = "//lang/" + this.language + ".json";
 		const request = new Request(requestURL);
 
 		const response = await fetch(request);
 		const lang = await response.json();
+		*/
 		/*
 		window.addEventListener("DOMContentLoaded", (event) => {
 			document.head.appendChild(langScriptElement);
