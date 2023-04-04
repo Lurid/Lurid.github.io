@@ -1,1 +1,1 @@
-# Lurid.github.io
+# Санчопацо
