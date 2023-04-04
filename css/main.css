@@ -1,0 +1,64 @@
+body {
+	padding: 0;
+	margin: 0;
+	font-family: system-ui;
+}
+
+@media only screen and (max-width: 768px) {
+	.app-body {
+		grid-template-columns: 0 100% 0;
+	}
+}
+
+@media only screen and (min-width: 600px) {
+	.app-body {
+		grid-template-columns: 0 100% 0;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.app-body {
+		grid-template-columns: 1fr 1000px 1fr;
+	}
+  }
+
+.app-header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 16pt;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	gap: 4pt;
+}
+
+.app-body {
+	display: grid;
+	margin: 16pt 0;
+}
+
+.app-footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 16pt;
+}
+
+.app-label {}
+
+.app-header>a {
+	font-size: 11pt;
+	font-family: monospace;
+	font-weight: bold;
+	text-decoration-line: none;
+	padding: 0 2pt;
+	border: 1px solid black;
+}
+
+#select-lang {
+	position: absolute;
+	right: 0;
+	height: 100%;
+}

@@ -1,9 +1,7 @@
-//const lang = new Language(
 {
 	"author": "Lurid",
 	"dictionary": {
+		"index001": "Greetings!\nMy name is Sasha, and here I will share my experience in the field of Web design.\nI love programming games and functional programs.\nBegan as a programmer in college, studied C#, using the Unity game engine.",
 		"hello": "Hello"
 	}
 }
-//);
-//const qweasd = "привит";

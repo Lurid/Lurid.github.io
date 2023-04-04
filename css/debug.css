@@ -1,0 +1,12 @@
+.app-body {
+	border: 1px solid black;
+	height: 1400px;
+}
+
+.app-center {
+	border: 1px solid red;
+}
+
+code {
+	white-space: pre-line;
+}

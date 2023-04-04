@@ -1,10 +1,13 @@
-var requestURL2 = 'lang/ru.json', request2, response2, lang2;
-async function qwerf2() {
-    request2 = new Request(requestURL2);
-    response2 = await fetch(request2);
-    lang2 = await response2.json();
-    console.log(lang2);
+var requestURL = 'lang/ru.json';
+function loadJSON() {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', requestURL, true);
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            //callback(xobj.responseText);
+            console.log("json loaded!");
+        }
+    };
+    xobj.send(null);
 }
-window.addEventListener("DOMContentLoaded", (event) => {
-    qwerf2();
-});
