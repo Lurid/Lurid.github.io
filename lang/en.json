@@ -1,7 +1,15 @@
 {
 	"author": "Lurid",
 	"dictionary": {
-		"index001": "Greetings!\nMy name is Sasha, and here I will share my experience in the field of Web design.\nI love programming games and functional programs.\nBegan as a programmer in college, studied C#, using the Unity game engine.",
+		"header-main": "Main page",
+		"header-games": "Games",
+		"header-code": "Code review",
+		"page-title-main": "Main page",
+		"page-title-games": "Games",
+		"page-title-code": "Code review",
+		"main001": "Greetings!\nMy name is Sasha, and here I will share my experience in the field of Web design.\nI love programming games and functional programs.\nBegan as a programmer in college, studied C#, using the Unity game engine.",
+		"games001": "Здесь будет описание игр",
+		"code001": "Здесь будет описание кода",
 		"hello": "Hello"
 	}
 }

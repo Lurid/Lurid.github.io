@@ -1,3 +1,26 @@
-.app-header, .app-footer {
+.app-header,
+.app-footer {
 	background-color: aquamarine;
+}
+
+.app-header a {
+	background-color: white;
+	color: black;
+	text-decoration: none	;
+}
+
+.app-header a:link {
+	color: initial;
+}
+
+.app-header a:visited {
+	color: initial;
+}
+
+.app-header a:hover {
+	color: hotpink;
+}
+
+.app-header a:active {
+	color: blue;
 }

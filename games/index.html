@@ -5,32 +5,19 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Lurid</title>
-	<script type="text/javascript" src="/js/lang.js"></script>
-	<link rel="stylesheet" href="/css/main.css">
-	<link rel="stylesheet" href="/css/colors.css">
-	<link rel="stylesheet" href="/css/debug.css">
+	<title -ld="page-title-games"></title>
+	<script type="text/javascript" src="/js/default.js"></script>
+	<meta -lp src="/default/scripts.html">
 </head>
 
 <body v="1">
-	<div class="app-header">
-		<a href="/">lurid.github.io</a>
-		<a href="/">Игры</a>
-		<a href="/">Просмотр кода</a>
-		<select id="select-lang" onchange="SetLanguage(this)">
-			<option value="en">English</option>
-			<option value="ru">Русский</option>
-		</select>
-	</div>
+	<meta -lp src="/default/header.html">
 	<div class="app-body">
 		<div class="app-left-panel"></div>
 		<div class="app-center">
-			<div -LD="game001"></div>
-
+			<div -ld="games001"></div>
 		</div>
 		<div class="app-right-panel"></div>
-
-
 	</div>
 	<div class="app-footer">
 		текст футера
