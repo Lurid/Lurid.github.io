@@ -50,6 +50,7 @@ body {
 }
 
 .app-center {
+	max-width: 1000px;
 	padding: 0 3pt;
 }
 
@@ -76,13 +77,3 @@ body {
 }
 
 #select-lang {}
-
-.flex-hor {
-	display: flex;
-	flex-direction: row;
-}
-
-.flex-ver {
-	display: flex;
-	flex-direction: column;
-}
