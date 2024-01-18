@@ -71,7 +71,6 @@ var tMercs, saveFieldsObj, FieldFinderObj, editFieldNameObj, editFieldValueObj, 
 
 document.addEventListener( "DOMContentLoaded", function () {
 	dataField = document.getElementById( "readgame" )
-	dataField.value = mySave
 	saveFieldsObj = document.getElementById( "saveFields" )
 	encodesaveObj = document.getElementById( "encodesave" )
 

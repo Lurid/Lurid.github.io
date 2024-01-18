@@ -11,8 +11,8 @@
 	<meta -lp src="/default/scripts.html">
 	<script type="text/javascript" src="./js/pako.min.js"></script>
 	<script type="text/javascript" src="./js/index.js"></script>
-	<script type="text/javascript" src="./mySave.js"></script>
-	<script type="text/javascript" src="./js/SaveEditor.js"></script>
+	<script type="text/javascript" src="./exampleSave.js"></script>
+	<script type="text/javascript" src="./js/SaveViewer.js"></script>
 </head>
 
 <body v="1">
@@ -25,6 +25,9 @@
 					<div class="flex-ver">
 						<div>
 							Read Savedata:
+						</div>
+						<div>
+							<button onclick="dataField.value = exampleSave; readSaveFromField();">Fill in the field with a simple example</button>
 						</div>
 						<div>
 							<input type="file" id="file-input" />
