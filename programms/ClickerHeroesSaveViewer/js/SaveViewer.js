@@ -115,14 +115,14 @@ function InspectElement() {
 	} )
 	outsidersLabels = Array( 11 ).fill().map( x => [] )
 	Array.from( document.querySelectorAll( '[-sol]' ) ).forEach( element => {
-		outsidersLabels[parseInt( element.getAttribute( '-sol' ) )].push( element )
+		outsidersLabels[parseInt( element.getAttribute( '-sol' ) )][parseInt( element.getAttribute( '-slid' ) )] = element
 	} )
 
 	Array.from( document.querySelectorAll( "[-sa]" ) ).forEach( x => x.addEventListener( 'focus', SelectAll ) )
 }
 
 function PutDataToPage() {
-	console.log( dataJSON )
+	//console.log( dataJSON )
 	simpleKeysActive.forEach( element => { element[2].value = element[2].title = dataJSON[element[0]] } )
 	simpleKeysAll = Object.keys( dataJSON ).filter( x => typeof ( dataJSON[x] ) != 'object' )
 	saveFieldsObj.innerHTML = simpleKeysAll.map( x => ( '<option value="' + x + '">' ) ).join( '' )
@@ -209,7 +209,7 @@ function SyncKeys( key, value, origin ) {
 function SaveDifficultValue( event ) {
 	if ( dataJSON != undefined ) {
 		var path = event.target.getAttribute( '-sdv' ).split( '-' ), l = path.length - 1, obj = dataJSON, newValue = event.target.value
-		console.log( `${path} = ${newValue}` )
+		//console.log( `${path} = ${newValue}` )
 		for ( let i = 0; i < l; i++ ) obj = obj[path[i]]
 		if ( obj != undefined && obj.hasOwnProperty( path[l] ) ) {
 			obj[path[l]] = newValue
@@ -229,14 +229,14 @@ var outsidersLabels
 function ChangeOutsiderLevel( id, level ) {
 	if ( typeof id == 'string' ) id = parseInt( id )
 	if ( typeof level == 'string' ) level = parseInt( level )
-	var val1, val2
+	var val1, val2, val3
 	switch ( id ) {
 		case 1:
 			val1 = ( Math.pow( 1.5, level ) - 1 ) * 100
 			break
 		case 2:
 			if ( level > 150 ) level = 150
-			val1 = 100 - ( ( Math.pow( 0.95, (level == 0) ? 0 : level - 1 ) ) * 100 )
+			val1 = 100 - ( ( Math.pow( 0.95, ( level == 0 ) ? 0 : level - 1 ) ) * 100 )
 			break
 		case 3:
 			val1 = level * 100
@@ -265,10 +265,16 @@ function ChangeOutsiderLevel( id, level ) {
 			val2 = 1 + 99 * ( level + 1 )
 			break
 	}
+	if ( id == 3 ) {
+		val3 = level
+	} else {
+		val3 = (level * ( level + 1 )) / 2
+	}
 	outsidersLabels[id][0].innerText = ( ( val1 < 100000 ) ? val1.toFixed( 2 ).replace( /\.?0+$/, '' ) : val1.toExponential( 2 ).replace( '+', '' ).replace( /\.?0+(e\d+)$/, "$1" ) )
 	if ( id > 5 ) {
 		outsidersLabels[id][1].innerText = val2.toFixed( 2 ).replace( /\.?0+$/, '' )
 	}
+	outsidersLabels[id][2].innerText = val3
 }
 
 var outJSONobj, inJSONobj
