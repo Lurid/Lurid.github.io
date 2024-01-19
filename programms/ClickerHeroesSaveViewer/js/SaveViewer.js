@@ -236,7 +236,7 @@ function ChangeOutsiderLevel( id, level ) {
 			break
 		case 2:
 			if ( level > 150 ) level = 150
-			val1 = 100 - ( ( Math.pow( 0.95, level - 1 ) ) * 100 )
+			val1 = 100 - ( ( Math.pow( 0.95, (level == 0) ? 0 : level - 1 ) ) * 100 )
 			break
 		case 3:
 			val1 = level * 100
