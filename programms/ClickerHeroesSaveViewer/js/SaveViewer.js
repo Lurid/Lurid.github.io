@@ -1,64 +1,66 @@
-var ANTI_CHEAT_CODE = "Fe12NAfA3R6z4k0z"
-var zlib = "7a990d405d2c6fb93aa8fbb0ec1a3b23"
-var deflate = "7e8bb5a89f2842ac4af01b3b7e228592"
-
-var dataField, dataInput, dataJSON, dataOutput
+var ANTI_CHEAT_CODE = "Fe12NAfA3R6z4k0z", zlib = "7a990d405d2c6fb93aa8fbb0ec1a3b23", deflate = "7e8bb5a89f2842ac4af01b3b7e228592", dataJSON
 
 function readSaveFile( event ) {
-	var file = event.target.files[0]
+	let file = event.target.files[0]
 	if ( !file ) return
-	var reader = new FileReader()
+	let reader = new FileReader()
 	reader.onload = function ( event ) {
-		dataField.value = event.target.result
-		readSaveFromField()
+		decodeFieldElement.value = event.target.result
+		decodeSaveFromField()
 	}
 	reader.readAsText( file )
 }
 
-function readSaveFromField() {
-	dataInput = dataField.value
+function decodeSaveFromField() {
+	let dataInput = decodeFieldElement.value
 	if ( dataInput.indexOf( ANTI_CHEAT_CODE ) > -1 || dataInput.substring( 0, 32 ) == zlib || dataInput.substring( 0, 32 ) == deflate ) {
 		if ( dataInput.substring( 0, 32 ) == zlib ) {
-			var pako = window.pako
+			let pako = window.pako
 			dataJSON = JSON.parse( pako.inflate( atob( dataInput.substring( 32 ) ), { to: 'string' } ) )
 		} else if ( dataInput.substring( 0, 32 ) == deflate ) {
-			var pako = window.pako
+			let pako = window.pako
 			dataJSON = JSON.parse( pako.inflateRaw( atob( dataInput.substring( 32 ) ), { to: 'string' } ) )
 		} else {
-			var result = dataInput.split( ANTI_CHEAT_CODE )
+			let result = dataInput.split( ANTI_CHEAT_CODE )
 			dataInput = ""
-			for ( var i = 0; i < result[0].length; i += 2 )
+			for ( let i = 0; i < result[0].length; i += 2 )
 				dataInput += result[0][i]
 			dataJSON = JSON.parse( atob( dataInput ) )
 		}
 		//console.log( JSON.stringify( dataJSON ) )
 		PutDataToPage()
 	}
-	else if ( dataInput )
+	else if ( dataInput ) {
 		document.getElementById( "alive" ).innerHTML = "Not a valid save, try again."
+		// ПЕРЕДЕЛАТЬ
+	}
 }
 
-function encodeSave() {
+function encodeSaveLaunch() {
 	if ( dataJSON != undefined ) {
-		var pako = window.pako
-		dataOutput = btoa( pako.deflate( JSON.stringify( dataJSON ), { to: 'string' } ) )
-		encodesaveObj.value = zlib + dataOutput
+		let pako = window.pako, dataOutput = btoa( pako.deflate( JSON.stringify( dataJSON ), { to: 'string' } ) )
+		encodeFieldElement.value = zlib + dataOutput
 	}
 }
 
-function SelectAll( event ) {
-	event.target.setSelectionRange( 0, 99999 )
+function encodeButtonClick() {
+	encodeSaveLaunch()
 }
 
-function CopySaveToBuffer() {
-	if ( encodesaveObj.value == '' ) {
-		encodeSave()
+function fillExampleButtonEvent() {
+	decodeFieldElement.value = exampleSave
+	decodeSaveFromField()
+}
+
+function copyButtonClick() {
+	if ( encodeFieldElement.value == '' ) {
+		encodeSaveLaunch()
 	}
-	encodesaveObj.select()
-	encodesaveObj.setSelectionRange( 0, 99999 )
+	encodeFieldElement.select()
+	encodeFieldElement.setSelectionRange( 0, 99999 )
 	document.execCommand( "copy" )
 	/*
-	navigator.clipboard.writeText( encodesaveObj.value ).then(() => {
+	navigator.clipboard.writeText( encodeFieldElement.value ).then(() => {
 		alert("successfully copied");
 	  })
 	  .catch(() => {
@@ -67,28 +69,33 @@ function CopySaveToBuffer() {
 	*/
 }
 
-var tMercs, saveFieldsObj, FieldFinderObj, editFieldNameObj, editFieldValueObj, encodesaveObj, AchievementsGridObj
+function SelectAll( event ) {
+	event.target.setSelectionRange( 0, 99999 )
+}
+
+var decodeFieldElement, encodeFieldElement,
+	customFieldSelectorElement, customFieldListElement, customFieldNameElement, customFieldValueElement,
+	AchievementsElement, outsidersLabels,
+	outJSONobj, inJSONobj
 
 document.addEventListener( "DOMContentLoaded", function () {
-	dataField = document.getElementById( "readgame" )
-	saveFieldsObj = document.getElementById( "saveFields" )
-	encodesaveObj = document.getElementById( "encodesave" )
-
-
 	document.getElementById( "file-input" ).addEventListener( 'change', readSaveFile, false )
+	decodeFieldElement = document.getElementById( "decodeField" )
+	encodeFieldElement = document.getElementById( "encodeField" )
 
-	tMercs = document.getElementById( "mercenariesTablePrefab" )
+	AchievementsElement = document.getElementById( "AchievementsGrid" )
+	let exceptionAchievementsNumbers = [112, 143]
+	AchievementsElement.innerHTML = Array( 169 ).fill( '' )
+		.map( ( value, index ) => index + 1 )
+		.map( ( value ) => `<label><input type="checkbox" -sdv="achievements-${value}"${exceptionAchievementsNumbers.includes( value ) ? "" : " -sf-ae"}>${value}</label>` )
+		.join( '' )
 
-	AchievementsGridObj = document.getElementById( "AchievementsGrid" )
-	AchievementsGridObj.innerHTML = Array( 169 ).fill( '' ).map( ( value, index ) => {
-		return `<label><input type="checkbox" -sdv="achievements-${index + 1}">${index + 1}</label>`
-	} ).join( '' )
-
-	editFieldNameObj = document.getElementById( "editFieldName" )
-	editFieldValueObj = document.getElementById( "editFieldValue" )
-	editFieldValueObj.addEventListener( 'blur', SaveFieldValue1 )
-	FieldFinderObj = document.getElementById( "FieldFinder" )
-	FieldFinderObj.addEventListener( 'input', onSelectFieldName )
+	customFieldListElement = document.getElementById( "customFieldList" )
+	customFieldNameElement = document.getElementById( "customFieldName" )
+	customFieldValueElement = document.getElementById( "customFieldValue" )
+	customFieldValueElement.addEventListener( 'blur', SaveFieldValue1 )
+	customFieldSelectorElement = document.getElementById( "customFieldSelector" )
+	customFieldSelectorElement.addEventListener( 'input', onSelectCustomFieldName )
 
 	outJSONobj = document.getElementById( "outJSON" )
 	inJSONobj = document.getElementById( "inJSON" )
@@ -97,61 +104,43 @@ document.addEventListener( "DOMContentLoaded", function () {
 } )
 
 var typeChanger = { 'text': 'text', 'number': 'number', 'boolean': 'checkbox' },
-	simpleKeysActive, listOfSimpleFields, simpleKeysAll,
-	listOfDifficultFields
+	simpleKeysList, listOfEditableFields
+
 
 function InspectElement() {
-	var elements = Array.from( document.querySelectorAll( "[-sv]" ) )
-
-	listOfSimpleFields = {}
-	elements.filter( ( value, index, array ) => { return array.indexOf( value ) === index } )
-		.map( x => x.getAttribute( "-sv" ) )
-		.forEach( ( key ) => { listOfSimpleFields[key] = elements.filter( ( element ) => ( element.getAttribute( "-sv" ) == key ) ) } )
-	simpleKeysActive = Object.keys( listOfSimpleFields )
-
-	listOfDifficultFields = Array.from( document.querySelectorAll( '[-sdv]' ) )
-	listOfDifficultFields.forEach( element => {
-		element.addEventListener( 'blur', SaveDifficultValue )
-	} )
+	listOfEditableFields = Array.from( document.querySelectorAll( '[-sdv]' ) )
+	listOfEditableFields.forEach( element => element.addEventListener( 'blur', element.hasAttribute( '-ssf' ) ? SaveFieldValue0 : SaveValue ) )
 	outsidersLabels = Array( 11 ).fill().map( x => [] )
 	Array.from( document.querySelectorAll( '[-sol]' ) ).forEach( element => {
 		outsidersLabels[parseInt( element.getAttribute( '-sol' ) )][parseInt( element.getAttribute( '-slid' ) )] = element
 	} )
-
 	Array.from( document.querySelectorAll( "[-sa]" ) ).forEach( x => x.addEventListener( 'focus', SelectAll ) )
 }
 
 function PutDataToPage() {
 	//console.log( dataJSON )
-	simpleKeysActive.forEach( element => { element[2].value = element[2].title = dataJSON[element[0]] } )
-	simpleKeysAll = Object.keys( dataJSON ).filter( x => typeof ( dataJSON[x] ) != 'object' )
-	saveFieldsObj.innerHTML = simpleKeysAll.map( x => ( '<option value="' + x + '">' ) ).join( '' )
-
-	simpleKeysActive.forEach( ( key ) => {
-		if ( dataJSON[key] != undefined ) {
-			listOfSimpleFields[key].forEach( ( element ) => {
-				element.setAttribute( 'type', typeChanger[typeof dataJSON[key]] )
-				element.value = element.title = dataJSON[key]
-				element.addEventListener( 'blur', SaveFieldValue0 )
-			} )
-		}
-	} )
-	listOfDifficultFields.forEach( element => {
-		var path = element.getAttribute( '-sdv' ).split( '-' ), l = path.length - 1, obj = dataJSON
+	simpleKeysList = Object.keys( dataJSON ).filter( x => typeof ( dataJSON[x] ) != 'object' )
+	customFieldListElement.innerHTML = simpleKeysList.map( x => ( '<option value="' + x + '">' ) ).join( '' )
+	listOfEditableFields.forEach( element => {
+		let path = element.getAttribute( '-sdv' ).split( '-' ), l = path.length - 1, obj = dataJSON
 		for ( let i = 0; i < l; i++ ) obj = obj[path[i]]
-		if ( obj != undefined && obj.hasOwnProperty( path[l] ) ) {
-			element.setAttribute( 'type', typeChanger[typeof obj[path[l]]] )
-			element.title = obj[path[l]]
-			if ( typeof obj[path[l]] == 'boolean' )
-				element.checked = obj[path[l]]
-			else
-				element.value = obj[path[l]]
+
+		if ( ( ( obj != undefined ) && obj.hasOwnProperty( path[l] ) ) || ( element.hasAttribute( '-sf-ae' ) && ( obj != undefined ) && ( !obj.hasOwnProperty( path[l] ) ) ) ) {
 			element.disabled = false
-			if ( element.hasAttribute( '-svt' ) ) {
-				switch ( parseInt( element.getAttribute( '-svt' ) ) ) {
-					case 0:
-						ChangeOutsiderLevel( path[l - 1], obj[path[l]] )
-						break
+			if ( obj.hasOwnProperty( path[l] ) ) {
+				element.setAttribute( 'type', typeChanger[typeof obj[path[l]]] )
+				element.title = obj[path[l]]
+				element[( typeof obj[path[l]] == 'boolean' ) ? 'checked' : 'value'] = obj[path[l]]
+				if ( element.hasAttribute( '-svt' ) ) {
+					switch ( parseInt( element.getAttribute( '-svt' ) ) ) {
+						case 0:
+							ChangeOutsiderLevel( path[l - 1], obj[path[l]] )
+							break
+					}
+				}
+			} else {
+				if ( element.getAttribute( 'type' ) == 'checkbox' ) {
+					element.checked = false
 				}
 			}
 		} else {
@@ -159,45 +148,41 @@ function PutDataToPage() {
 		}
 	} )
 
-	SelectCustomField( FieldFinderObj.value )
+	SelectCustomFieldName( customFieldSelectorElement.value )
 }
 
-function onSelectFieldName( event ) {
-	// console.log( event.inputType )
+function onSelectCustomFieldName( event ) {
 	if ( dataJSON != undefined ) {
-		if ( ( event.inputType == undefined ) || ( simpleKeysAll.indexOf( FieldFinderObj.value ) != -1 ) ) {
-			SelectCustomField( FieldFinderObj.value )
+		if ( ( event.inputType == undefined ) || ( simpleKeysList.indexOf( customFieldSelectorElement.value ) != -1 ) ) {
+			SelectCustomFieldName( customFieldSelectorElement.value )
 		}
 	}
 }
 
-function SelectCustomField( key ) {
+function SelectCustomFieldName( key ) {
 	if ( key != '' ) {
-		editFieldNameObj.innerText = key
-		editFieldValueObj.setAttribute( 'type', typeChanger[typeof dataJSON[key]] )
-		if ( editFieldValueObj.type == 'checkbox' )
-			editFieldValueObj.checked = dataJSON[key]
-		else
-			editFieldValueObj.value = dataJSON[key]
-		editFieldValueObj.title = dataJSON[key]
+		customFieldNameElement.innerText = key
+		customFieldValueElement.setAttribute( 'type', typeChanger[typeof dataJSON[key]] )
+		customFieldValueElement[( customFieldValueElement.type == 'checkbox' ) ? 'checked' : 'value'] = dataJSON[key]
+		customFieldValueElement.title = dataJSON[key]
 	}
 }
 
-function SaveFieldValue0( element ) {
-	SyncKeys( element.target.getAttribute( '-sv' ), element.target.value, 0 )
+function SaveFieldValue0( event ) {
+	SyncKeys( event.target.getAttribute( '-sdv' ), event.target[( event.target.getAttribute( 'type' ) == 'checkbox' ) ? 'checked' : 'value'], 0 )
 }
 
 function SaveFieldValue1() {
-	SyncKeys( editFieldNameObj.innerText, editFieldValueObj.type == 'checkbox' ? editFieldValueObj.checked : editFieldValueObj.value, 1 )
+	SyncKeys( customFieldNameElement.innerText, customFieldValueElement.type == 'checkbox' ? customFieldValueElement.checked : customFieldValueElement.value, 1 )
 }
 
 function SyncKeys( key, value, origin ) {
 	switch ( origin ) {
 		case 0:
-			if ( editFieldNameObj.innerText == key ) editFieldValueObj.value = value
+			if ( customFieldNameElement.innerText == key ) customFieldValueElement[( typeof value == 'boolean' ) ? 'checked' : 'value'] = value
 			break
 		case 1:
-			if ( listOfSimpleFields.hasOwnProperty( key ) ) listOfSimpleFields[key].forEach( ( element ) => element.value = value )
+			Array.from( document.querySelectorAll( `[-sdv="${key}"]` ) ).forEach( element => element[( typeof value == 'boolean' ) ? 'checked' : 'value'] = value )
 			break
 	}
 	if ( dataJSON.hasOwnProperty( key ) ) {
@@ -206,15 +191,17 @@ function SyncKeys( key, value, origin ) {
 	}
 }
 
-function SaveDifficultValue( event ) {
+function SaveValue( event ) {
 	if ( dataJSON != undefined ) {
-		var path = event.target.getAttribute( '-sdv' ).split( '-' ), l = path.length - 1, obj = dataJSON, newValue = event.target.value
-		//console.log( `${path} = ${newValue}` )
+		let element = event.target
+		if ( element.value == '' ) element.value = 0
+		let path = element.getAttribute( '-sdv' ).split( '-' ), l = path.length - 1, obj = dataJSON, newValue
+		newValue = element[( element.getAttribute( 'type' ) == 'checkbox' ) ? 'checked' : 'value']
 		for ( let i = 0; i < l; i++ ) obj = obj[path[i]]
-		if ( obj != undefined && obj.hasOwnProperty( path[l] ) ) {
+		if ( ( ( obj != undefined ) && obj.hasOwnProperty( path[l] ) ) || ( element.hasAttribute( '-sf-ae' ) && ( obj != undefined ) && ( !obj.hasOwnProperty( path[l] ) ) ) ) {
 			obj[path[l]] = newValue
-			if ( event.target.hasAttribute( '-svt' ) ) {
-				switch ( parseInt( event.target.getAttribute( '-svt' ) ) ) {
+			if ( element.hasAttribute( '-svt' ) ) {
+				switch ( parseInt( element.getAttribute( '-svt' ) ) ) {
 					case 0:
 						ChangeOutsiderLevel( path[l - 1], newValue )
 						break
@@ -224,12 +211,10 @@ function SaveDifficultValue( event ) {
 	}
 }
 
-var outsidersLabels
-
 function ChangeOutsiderLevel( id, level ) {
 	if ( typeof id == 'string' ) id = parseInt( id )
 	if ( typeof level == 'string' ) level = parseInt( level )
-	var val1, val2, val3
+	let val1, val2, val3
 	switch ( id ) {
 		case 1:
 			val1 = ( Math.pow( 1.5, level ) - 1 ) * 100
@@ -268,7 +253,7 @@ function ChangeOutsiderLevel( id, level ) {
 	if ( id == 3 ) {
 		val3 = level
 	} else {
-		val3 = (level * ( level + 1 )) / 2
+		val3 = ( level * ( level + 1 ) ) / 2
 	}
 	outsidersLabels[id][0].innerText = ( ( val1 < 100000 ) ? val1.toFixed( 2 ).replace( /\.?0+$/, '' ) : val1.toExponential( 2 ).replace( '+', '' ).replace( /\.?0+(e\d+)$/, "$1" ) )
 	if ( id > 5 ) {
@@ -276,8 +261,6 @@ function ChangeOutsiderLevel( id, level ) {
 	}
 	outsidersLabels[id][2].innerText = val3
 }
-
-var outJSONobj, inJSONobj
 
 function ConvertDataToJSON() {
 	if ( dataJSON != undefined ) {

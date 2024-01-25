@@ -70,13 +70,14 @@ img {
 
 summary+div {
 	display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: nowrap;
+	flex-direction: column;
+	align-items: center;
+	flex-wrap: nowrap;
 }
 
 p {
 	margin-block: 0;
+	text-align: center;
 }
 
 .table-border {
@@ -85,17 +86,32 @@ p {
 	border-collapse: collapse;
 }
 
-.table-border td, .table-border th {
+.table-border td,
+.table-border th {
 	padding: 2px;
 	border: 1px solid black;
 }
 
 .table-outsiders div>p:first-of-type {
 	text-align: center;
-    text-decoration: underline;
-    font-weight: bold;
+	text-decoration: underline;
+	font-weight: bold;
 }
 
 .none {
 	display: none;
+}
+
+label {
+	user-select: none;
+	white-space: nowrap;
+}
+
+ol {
+	padding: 0;
+	margin: 0;
+}
+
+ol.flex-free>li {
+	margin-left: 30pt;
 }

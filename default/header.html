@@ -3,10 +3,13 @@
 		<a href="/" -ld="header-main"></a>
 		<a href="/games/" -ld="header-games"></a>
 		<a href="/programms/" -ld="header-programs"></a>
-		<a href="/code/"-ld="header-code"></a>
+		<a href="/code/" -ld="header-code"></a>
 	</div>
-	<select id="select-lang" onchange="SetLanguage(this)">
-		<option value="en">🇺🇸</option>
-		<option value="ru">🇷🇺</option>
-	</select>
+	<div class="flex-hor">
+		Language:
+		<select id="select-lang" onchange="SetLanguage(this)">
+			<option value="en">English</option>
+			<option value="ru">Русский</option>
+		</select>
+	</div>
 </div>

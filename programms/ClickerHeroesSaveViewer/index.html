@@ -27,17 +27,18 @@
 							Read Savedata:
 						</div>
 						<div>
-							<button onclick="dataField.value = exampleSave; readSaveFromField();">Fill in the field with
+							<button onclick="fillExampleButtonEvent()">Fill in the field
+								with
 								a simple example</button>
 						</div>
 						<div>
 							<input type="file" id="file-input" />
 						</div>
 						<div>
-							<input type="text" id="readgame" -sa>
+							<input type="text" id="decodeField" -sa>
 						</div>
 						<div>
-							<button onclick="readSaveFromField()">Read Save From Field</button>
+							<button onclick="decodeSaveFromField()">Read Save From Field</button>
 						</div>
 					</div>
 					<div class="flex-ver">
@@ -45,13 +46,13 @@
 							Save Savedata:
 						</div>
 						<div>
-							<button onclick="encodeSave()">Encode Save To Field</button>
+							<button onclick="encodeButtonClick()">Encode Save To Field</button>
 						</div>
 						<div>
-							<input type="text" id="encodesave" rows="1" -sa>
+							<input type="text" id="encodeField" rows="1" -sa>
 						</div>
 						<div>
-							<button onclick="CopySaveToBuffer()">Copy Field To Buffer</button>
+							<button onclick="copyButtonClick()">Copy Field To Buffer</button>
 						</div>
 					</div>
 
@@ -64,22 +65,42 @@
 							<table>
 								<tr>
 									<td>Rubies</td>
-									<td><input type="number" -sv="rubies"></td>
+									<td><input type="number" -ssf -sdv="rubies"></td>
 								</tr>
 								<tr>
 									<td>Autoclickers count</td>
-									<td><input type="number" -sv="autoclickers"></td>
+									<td><input type="number" -ssf -sdv="autoclickers"></td>
 								</tr>
 								<tr>
 									<td>Spiked Nog Count</td>
-									<td><input type="number" -sv="spikedNog"></td>
+									<td><input type="number" -ssf -sdv="spikedNog"></td>
 								</tr>
-
 								<tr>
 									<td>Transcendent Highest Finished Zone</td>
-									<td><input type="number" -sv="transcendentHighestFinishedZone"></td>
+									<td><input type="number" -ssf -sdv="transcendentHighestFinishedZone"></td>
+								</tr>
+								<tr>
+									<td>Current Autoclicker Skin</td>
+									<td><input type="number" -ssf -sdv="currentAutoclickerSkin"></td>
 								</tr>
 							</table>
+							<p>Auto Clicker Skins:</p>
+							<ol type="1" class="flex-free">
+								<li><label><input type="checkbox" -sdv="autoclickerSkins-1" -sf-ae>Auto Clicker
+										(Default)</label></li>
+								<li><label><input type="checkbox" -sdv="autoclickerSkins-2" -sf-ae>Zombie Auto
+										Clicker</label></li>
+								<li><label><input type="checkbox" -sdv="autoclickerSkins-3" -sf-ae>Turkey Auto
+										Clicker</label></li>
+								<li><label><input type="checkbox" -sdv="autoclickerSkins-4" -sf-ae>Snowman Auto
+										Clicker</label></li>
+								<li><label><input type="checkbox" -sdv="autoclickerSkins-5" -sf-ae>Red-Nosed
+										Clickdeer</label></li>
+								<li><label><input type="checkbox" -sdv="autoclickerSkins-6" -sf-ae>Boxy & Bloop
+										Clicker</label></li>
+								<li><label><input type="checkbox" -sdv="autoclickerSkins-7" -sf-ae>Unicorn Auto
+										Clicker</label></li>
+							</ol>
 						</div>
 					</details>
 
@@ -89,25 +110,23 @@
 							<table>
 								<tr>
 									<td>Gold</td>
-									<td><input type="number" -sv="gold"></td>
+									<td><input type="number" -ssf -sdv="gold"></td>
 								</tr>
 								<tr>
 									<td>Highest Zone Number</td>
-									<td><input type="number" -sv="highestFinishedZone"></td>
+									<td><input type="number" -ssf -sdv="highestFinishedZone"></td>
 								</tr>
 								<tr>
 									<td>Current Zone Number</td>
-									<td><input type="number" -sv="currentZoneHeight"></td>
+									<td><input type="number" -ssf -sdv="currentZoneHeight"></td>
 								</tr>
 								<tr>
 									<td>Hero Souls</td>
-									<td><input type="text" -sv="heroSouls"></td>
+									<td><input type="text" -ssf -sdv="heroSouls"></td>
 								</tr>
 								<tr>
 									<td>Primal Souls</td>
-									<td><input type="text" -sv="primalSouls"></td>
-
-
+									<td><input type="text" -ssf -sdv="primalSouls"></td>
 								</tr>
 							</table>
 						</div>
@@ -119,38 +138,38 @@
 							<table>
 								<tr>
 									<td>Total 5-Minute Quests</td>
-									<td><input type="text" -sv="total5MinuteQuests"></td>
+									<td><input type="text" -ssf -sdv="total5MinuteQuests"></td>
 								</tr>
 								<tr>
 									<td>HeroSoulQuests Completed </td>
-									<td><input type="text" -sv="heroSoulQuestsCompleted"></td>
+									<td><input type="text" -ssf -sdv="heroSoulQuestsCompleted"></td>
 								</tr>
 								<tr>
 									<td>GoldQuests Completed</td>
-									<td><input type="text" -sv="goldQuestsCompleted"></td>
+									<td><input type="text" -ssf -sdv="goldQuestsCompleted"></td>
 								</tr>
 								<tr>
 									<td>Ruby Quests Completed</td>
-									<td><input type="text" -sv="rubyQuestsCompleted"></td>
+									<td><input type="text" -ssf -sdv="rubyQuestsCompleted"></td>
 								</tr>
 								<tr>
 									<td>Relic Quests Completed</td>
-									<td><input type="text" -sv="relicQuestsCompleted"></td>
+									<td><input type="text" -ssf -sdv="relicQuestsCompleted"></td>
 								</tr>
 								<tr>
 									<td>Skill Quests Completed</td>
-									<td><input type="text" -sv="skillQuestsCompleted"></td>
+									<td><input type="text" -ssf -sdv="skillQuestsCompleted"></td>
 								</tr>
 								<tr>
 									<td>Total Mercenaries Buried</td>
-									<td><input type="text" -sv="totalMercenariesBuried"></td>
+									<td><input type="text" -ssf -sdv="totalMercenariesBuried"></td>
 								</tr>
 								<tr>
 									<td>Total Mercenaries Revived</td>
-									<td><input type="text" -sv="totalMercenariesRevived"></td>
+									<td><input type="text" -ssf -sdv="totalMercenariesRevived"></td>
 								</tr>
 							</table>
-							<div id="AchievementsGrid" class="grid-free">
+							<div id="AchievementsGrid" class="flex-free">
 							</div>
 						</div>
 					</details>
@@ -174,19 +193,19 @@
 
 								<tr>
 									<td>Clan Raid Class (0-none,1-rogue,2-mage,3-priest)</td>
-									<td><input type="number" -sv="newClanRaidClassId"></td>
+									<td><input type="number" -ssf -sdv="newClanRaidClassId"></td>
 								</tr>
 								<tr>
 									<td>Clan Raid Class Level</td>
-									<td><input type="number" -sv="newClanRaidClassLevel"></td>
+									<td><input type="number" -ssf -sdv="newClanRaidClassLevel"></td>
 								</tr>
 								<tr>
 									<td>Immortal Souls</td>
-									<td><input type="number" -sv="immortalSouls"></td>
+									<td><input type="number" -ssf -sdv="immortalSouls"></td>
 								</tr>
 								<tr>
 									<td>Titan Damage</td>
-									<td><input type="number" -sv="titanDamage"></td>
+									<td><input type="number" -ssf -sdv="titanDamage"></td>
 								</tr>
 							</table>
 						</div>
@@ -247,15 +266,15 @@
 							<table>
 								<tr>
 									<td>Ancient Souls</td>
-									<td><input type="text" -sv="ancientSouls"></td>
+									<td><input type="text" -ssf -sdv="ancientSouls"></td>
 								</tr>
 								<tr>
 									<td>Ancient Souls Total</td>
-									<td><input type="text" -sv="ancientSoulsTotal"></td>
+									<td><input type="text" -ssf -sdv="ancientSoulsTotal"></td>
 								</tr>
 								<tr>
 									<td>Hero Souls Sacrificed</td>
-									<td><input type="text" -sv="heroSoulsSacrificed"></td>
+									<td><input type="text" -ssf -sdv="heroSoulsSacrificed"></td>
 								</tr>
 							</table>
 							<table class="table-border table-outsiders">
@@ -470,8 +489,8 @@
 								<tr>
 									<td>Find field by name</td>
 									<td>
-										<input type="text" list="saveFields" id="FieldFinder">
-										<datalist id="saveFields">
+										<input type="text" list="customFieldList" id="customFieldSelector">
+										<datalist id="customFieldList">
 										</datalist>
 									</td>
 								</tr>
@@ -479,13 +498,13 @@
 								<tr>
 									<td>Field name</td>
 									<td>
-										<div id="editFieldName"></div>
+										<div id="customFieldName"></div>
 									</td>
 								</tr>
 
 								<tr>
 									<td>Field value</td>
-									<td><input type="text" id="editFieldValue"></td>
+									<td><input type="text" id="customFieldValue"></td>
 								</tr>
 							</table>
 						</div>
@@ -535,13 +554,6 @@
 								</p>
 							</div>
 							<div class="flex-ver">
-								<div>
-									<a href='http://www.freevisitorcounters.com'>www.freevisitorcounters.com</a>
-									<script type='text/javascript'
-										src='https://www.freevisitorcounters.com/auth.php?id=7172b391cf9e244b584d3d68c96313111f89b3ff'></script>
-									<script type="text/javascript"
-										src="https://www.freevisitorcounters.com/en/home/counter/1128362/t/13"></script>
-								</div>
 								<div>
 									<a href="https://www.cutercounter.com/" target="_blank">
 										<img src="https://www.cutercounter.com/stats.php?id=hrvxpdxpp&nd=6&style=22"
