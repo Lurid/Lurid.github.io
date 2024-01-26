@@ -45,6 +45,7 @@ function encodeSaveLaunch() {
 
 function encodeButtonClick() {
 	encodeSaveLaunch()
+	copyButtonClick()
 }
 
 function fillExampleButtonEvent() {
@@ -75,7 +76,7 @@ function SelectAll( event ) {
 
 var decodeFieldElement, encodeFieldElement,
 	customFieldSelectorElement, customFieldListElement, customFieldNameElement, customFieldValueElement,
-	AchievementsElement, outsidersLabels,
+	AchievementsElement, outsidersLabels, AchievementsTBodyElement, AchievementsTablesElement,
 	outJSONobj, inJSONobj
 
 document.addEventListener( "DOMContentLoaded", function () {
@@ -83,12 +84,53 @@ document.addEventListener( "DOMContentLoaded", function () {
 	decodeFieldElement = document.getElementById( "decodeField" )
 	encodeFieldElement = document.getElementById( "encodeField" )
 
+	AchievementsTablesElement = document.getElementById( "AchievementsTables" )
+	let AchievementSorted = Array.from(Object.values( AchievementType ).map(k => [k, Object.keys( AchievementsList )
+		.filter( achievementID => AchievementsList[achievementID][5] == k )])).sort((a, b) => b[1].length - a[1].length),
+		AchievementTypes = Object.keys(AchievementType)
+
+	AchievementsTablesElement.innerHTML = AchievementSorted.map( _AchievementType => {
+		let achievements = _AchievementType[1].sort((a, b) => {
+			if ( AchievementsList[a][6] == undefined || AchievementsList[b][6] == undefined )
+				return AchievementsList[a][6] == undefined ? 1 : AchievementsList[b][6] == undefined ? -1 : 0
+			else
+				return AchievementsList[a][6].type - AchievementsList[b][6].type
+		})
+		//console.log( achievements )
+		return `<table class="table-border">
+		<tr><th colspan="3">${AchievementTypes[_AchievementType[0]]}-related achievements</th></tr>
+		<tr>
+			<th>Image</th>
+			<th>Description</th>
+			<th>Status</th>
+		</tr>
+		${achievements
+				.map( ( achievement ) => `<tr>
+				<td><img src="${imagesURL}${AchievementsList[achievement][4]}"></td>
+				<td>
+					<p><b>${AchievementsList[achievement][0]}</b></p>
+					<p>${AchievementsList[achievement][1]}</p>
+					${(AchievementsList[achievement][2] != undefined) ? `<p>${AchievementsList[achievement][2]}</p>` : ''}
+					${(AchievementsList[achievement][3] != undefined) ? `<p>Reward: ${AchievementsList[achievement][3]}</p>` : ''}
+				</td>
+				<td><input type="checkbox" -sdv="achievements-${achievement}" -svt="1" -sf-ae></td>
+				</tr>` )
+				.join( '' )
+			}
+		</table>`
+	} )
+		.join( '' )
+
+
+		/*
 	AchievementsElement = document.getElementById( "AchievementsGrid" )
 	let exceptionAchievementsNumbers = [112, 143]
 	AchievementsElement.innerHTML = Array( 169 ).fill( '' )
 		.map( ( value, index ) => index + 1 )
-		.map( ( value ) => `<label><input type="checkbox" -sdv="achievements-${value}"${exceptionAchievementsNumbers.includes( value ) ? "" : " -sf-ae"}>${value}</label>` )
+		.filter( value => !exceptionAchievementsNumbers.includes( value ) )
+		.map( ( value ) => `<label><input type="checkbox" -sdv="achievements-${value}" -svt="1" -sf-ae>${value}</label>` )
 		.join( '' )
+		*/
 
 	customFieldListElement = document.getElementById( "customFieldList" )
 	customFieldNameElement = document.getElementById( "customFieldName" )
@@ -199,11 +241,16 @@ function SaveValue( event ) {
 		newValue = element[( element.getAttribute( 'type' ) == 'checkbox' ) ? 'checked' : 'value']
 		for ( let i = 0; i < l; i++ ) obj = obj[path[i]]
 		if ( ( ( obj != undefined ) && obj.hasOwnProperty( path[l] ) ) || ( element.hasAttribute( '-sf-ae' ) && ( obj != undefined ) && ( !obj.hasOwnProperty( path[l] ) ) ) ) {
-			obj[path[l]] = newValue
-			if ( element.hasAttribute( '-svt' ) ) {
+			if ( !element.hasAttribute( '-svt' ) ) {
+				obj[path[l]] = newValue
+			} else {
 				switch ( parseInt( element.getAttribute( '-svt' ) ) ) {
 					case 0:
+						obj[path[l]] = newValue
 						ChangeOutsiderLevel( path[l - 1], newValue )
+						break
+					case 1:
+						SetAchievementStatus( path[l], newValue )
 						break
 				}
 			}
@@ -260,6 +307,14 @@ function ChangeOutsiderLevel( id, level ) {
 		outsidersLabels[id][1].innerText = val2.toFixed( 2 ).replace( /\.?0+$/, '' )
 	}
 	outsidersLabels[id][2].innerText = val3
+}
+
+function SetAchievementStatus( id, status ) {
+	if ( status ) {
+		dataJSON.achievements[id] = true
+	} else {
+		delete dataJSON.achievements[id]
+	}
 }
 
 function ConvertDataToJSON() {

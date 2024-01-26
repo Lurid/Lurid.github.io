@@ -11,8 +11,9 @@
 	<meta -lp src="/default/scripts.html">
 	<script type="text/javascript" src="./js/pako.min.js"></script>
 	<script type="text/javascript" src="./js/index.js"></script>
-	<script type="text/javascript" src="./exampleSave.js"></script>
-	<script type="text/javascript" src="./js/SaveViewer.js"></script>
+	<script type="text/javascript" src="./js/exampleSave.js"></script>
+	<script type="text/javascript" src="./js/achievements.js"></script>
+	<script type="text/javascript" src="./js/SaveViewer.js?v=2"></script>
 </head>
 
 <body v="1">
@@ -135,40 +136,7 @@
 					<details>
 						<summary>Achievements</summary>
 						<div>
-							<table>
-								<tr>
-									<td>Total 5-Minute Quests</td>
-									<td><input type="text" -ssf -sdv="total5MinuteQuests"></td>
-								</tr>
-								<tr>
-									<td>HeroSoulQuests Completed </td>
-									<td><input type="text" -ssf -sdv="heroSoulQuestsCompleted"></td>
-								</tr>
-								<tr>
-									<td>GoldQuests Completed</td>
-									<td><input type="text" -ssf -sdv="goldQuestsCompleted"></td>
-								</tr>
-								<tr>
-									<td>Ruby Quests Completed</td>
-									<td><input type="text" -ssf -sdv="rubyQuestsCompleted"></td>
-								</tr>
-								<tr>
-									<td>Relic Quests Completed</td>
-									<td><input type="text" -ssf -sdv="relicQuestsCompleted"></td>
-								</tr>
-								<tr>
-									<td>Skill Quests Completed</td>
-									<td><input type="text" -ssf -sdv="skillQuestsCompleted"></td>
-								</tr>
-								<tr>
-									<td>Total Mercenaries Buried</td>
-									<td><input type="text" -ssf -sdv="totalMercenariesBuried"></td>
-								</tr>
-								<tr>
-									<td>Total Mercenaries Revived</td>
-									<td><input type="text" -ssf -sdv="totalMercenariesRevived"></td>
-								</tr>
-							</table>
+							<div id="AchievementsTables" class="flex-free"></div>
 							<div id="AchievementsGrid" class="flex-free">
 							</div>
 						</div>
@@ -190,7 +158,6 @@
 						<summary>Clan values</summary>
 						<div>
 							<table>
-
 								<tr>
 									<td>Clan Raid Class (0-none,1-rogue,2-mage,3-priest)</td>
 									<td><input type="number" -ssf -sdv="newClanRaidClassId"></td>
@@ -215,6 +182,41 @@
 					<details>
 						<summary>Mercenaries</summary>
 						<div>
+
+							<table>
+								<tr>
+									<td>Total Mercenaries Revived</td>
+									<td><input type="text" -ssf -sdv="totalMercenariesRevived"></td>
+								</tr>
+								<tr>
+									<td>Total Mercenaries Buried</td>
+									<td><input type="text" -ssf -sdv="totalMercenariesBuried"></td>
+								</tr>
+								<tr>
+									<td>Total 5-Minute Quests</td>
+									<td><input type="text" -ssf -sdv="total5MinuteQuests"></td>
+								</tr>
+								<tr>
+									<td>HeroSoulQuests Completed </td>
+									<td><input type="text" -ssf -sdv="heroSoulQuestsCompleted"></td>
+								</tr>
+								<tr>
+									<td>GoldQuests Completed</td>
+									<td><input type="text" -ssf -sdv="goldQuestsCompleted"></td>
+								</tr>
+								<tr>
+									<td>Ruby Quests Completed</td>
+									<td><input type="text" -ssf -sdv="rubyQuestsCompleted"></td>
+								</tr>
+								<tr>
+									<td>Relic Quests Completed</td>
+									<td><input type="text" -ssf -sdv="relicQuestsCompleted"></td>
+								</tr>
+								<tr>
+									<td>Skill Quests Completed</td>
+									<td><input type="text" -ssf -sdv="skillQuestsCompleted"></td>
+								</tr>
+							</table>
 							<table id="mercenariesTablePrefab" class="table-border">
 								<thead>
 									<tr>

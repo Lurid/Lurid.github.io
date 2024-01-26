@@ -115,3 +115,16 @@ ol {
 ol.flex-free>li {
 	margin-left: 30pt;
 }
+
+#AchievementsTables {
+	justify-content: space-evenly;
+	align-items: flex-start;
+}
+
+#AchievementsTables p {
+	text-wrap: balance;
+}
+#AchievementsTables input {
+	width: 40px;
+	height: 40px;
+}
