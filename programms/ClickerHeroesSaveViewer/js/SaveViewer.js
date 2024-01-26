@@ -110,8 +110,8 @@ document.addEventListener( "DOMContentLoaded", function () {
 				<td>
 					<p><b>${AchievementsList[achievement][0]}</b></p>
 					<p>${AchievementsList[achievement][1]}</p>
-					${( AchievementsList[achievement][2] != undefined ) ? `<p>${AchievementsList[achievement][2]}</p>` : ''}
-					${( AchievementsList[achievement][3] != undefined ) ? `<p>Reward: ${AchievementsList[achievement][3]}</p>` : ''}
+					${( AchievementsList[achievement][2] != undefined ) ? `<p><i>${AchievementsList[achievement][2]}</i></p>` : ''}
+					${( AchievementsList[achievement][3] != undefined ) ? `<p><u>Reward: ${AchievementsList[achievement][3]}</u></p>` : ''}
 				</td>
 				<td><input type="checkbox" -sdv="achievements-${achievement}" -svt="1" -sf-ae></td>
 				</tr>` )

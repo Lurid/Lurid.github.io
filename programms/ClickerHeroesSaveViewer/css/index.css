@@ -124,7 +124,11 @@ ol.flex-free>li {
 #AchievementsTables p {
 	text-wrap: balance;
 }
+
+#AchievementsTables table {
+	max-width: 50%;
+}
 #AchievementsTables input {
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 }
