@@ -76,7 +76,7 @@ function SelectAll( event ) {
 
 var decodeFieldElement, encodeFieldElement,
 	customFieldSelectorElement, customFieldListElement, customFieldNameElement, customFieldValueElement,
-	AchievementsElement, outsidersLabels, AchievementsTBodyElement, AchievementsTablesElement,
+	outsidersLabels, AchievementsTBodyElement, AchievementsTablesElement,
 	outJSONobj, inJSONobj
 
 document.addEventListener( "DOMContentLoaded", function () {
@@ -85,17 +85,17 @@ document.addEventListener( "DOMContentLoaded", function () {
 	encodeFieldElement = document.getElementById( "encodeField" )
 
 	AchievementsTablesElement = document.getElementById( "AchievementsTables" )
-	let AchievementSorted = Array.from(Object.values( AchievementType ).map(k => [k, Object.keys( AchievementsList )
-		.filter( achievementID => AchievementsList[achievementID][5] == k )])).sort((a, b) => b[1].length - a[1].length),
-		AchievementTypes = Object.keys(AchievementType)
+	let AchievementSorted = Array.from( Object.values( AchievementType ).map( k => [k, Object.keys( AchievementsList )
+		.filter( achievementID => AchievementsList[achievementID][5] == k )] ) ).sort( ( a, b ) => b[1].length - a[1].length ),
+		AchievementTypes = Object.keys( AchievementType )
 
 	AchievementsTablesElement.innerHTML = AchievementSorted.map( _AchievementType => {
-		let achievements = _AchievementType[1].sort((a, b) => {
+		let achievements = _AchievementType[1].sort( ( a, b ) => {
 			if ( AchievementsList[a][6] == undefined || AchievementsList[b][6] == undefined )
 				return AchievementsList[a][6] == undefined ? 1 : AchievementsList[b][6] == undefined ? -1 : 0
 			else
 				return AchievementsList[a][6].type - AchievementsList[b][6].type
-		})
+		} )
 		//console.log( achievements )
 		return `<table class="table-border">
 		<tr><th colspan="3">${AchievementTypes[_AchievementType[0]]}-related achievements</th></tr>
@@ -110,8 +110,8 @@ document.addEventListener( "DOMContentLoaded", function () {
 				<td>
 					<p><b>${AchievementsList[achievement][0]}</b></p>
 					<p>${AchievementsList[achievement][1]}</p>
-					${(AchievementsList[achievement][2] != undefined) ? `<p>${AchievementsList[achievement][2]}</p>` : ''}
-					${(AchievementsList[achievement][3] != undefined) ? `<p>Reward: ${AchievementsList[achievement][3]}</p>` : ''}
+					${( AchievementsList[achievement][2] != undefined ) ? `<p>${AchievementsList[achievement][2]}</p>` : ''}
+					${( AchievementsList[achievement][3] != undefined ) ? `<p>Reward: ${AchievementsList[achievement][3]}</p>` : ''}
 				</td>
 				<td><input type="checkbox" -sdv="achievements-${achievement}" -svt="1" -sf-ae></td>
 				</tr>` )
@@ -120,17 +120,6 @@ document.addEventListener( "DOMContentLoaded", function () {
 		</table>`
 	} )
 		.join( '' )
-
-
-		/*
-	AchievementsElement = document.getElementById( "AchievementsGrid" )
-	let exceptionAchievementsNumbers = [112, 143]
-	AchievementsElement.innerHTML = Array( 169 ).fill( '' )
-		.map( ( value, index ) => index + 1 )
-		.filter( value => !exceptionAchievementsNumbers.includes( value ) )
-		.map( ( value ) => `<label><input type="checkbox" -sdv="achievements-${value}" -svt="1" -sf-ae>${value}</label>` )
-		.join( '' )
-		*/
 
 	customFieldListElement = document.getElementById( "customFieldList" )
 	customFieldNameElement = document.getElementById( "customFieldName" )
